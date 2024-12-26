@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { TaskEnum } from "src/enum/task.enum";
 
 
 
@@ -12,7 +13,7 @@ export class Task{
   content:string
   @Prop()
   userId:string
-  @Prop()
+  @Prop({enum:TaskEnum,default:TaskEnum.Pending})
   status:string
 
 }
