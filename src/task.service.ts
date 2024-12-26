@@ -35,4 +35,23 @@ export class TaskService {
   }
  }
 
+ async deleteTask(title:string){
+  console.log(title)
+  const task=await this.taskModel.findOne({title})
+  console.log(task)
+  if(!task){
+    return {
+      status:HttpStatus.NOT_FOUND,
+      message:"task not found!",
+      error:true
+    }
+  }
+  await this.taskModel.deleteOne({title})
+  return {
+    status:HttpStatus.OK,
+    error:false,
+    message:"remove task sucessfully"
+  }
+ }
+
 }

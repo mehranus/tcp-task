@@ -17,5 +17,10 @@ export class TaskController {
   getTaskUser({userId}:{userId:string}){
     return this.taskService.getUserTask(userId)
   }
+  @MessagePattern("delete_task")
+  deleteTaskUser({title}:{title:string}){
+  
+    return this.taskService.deleteTask(title)
+  }
 
 }
