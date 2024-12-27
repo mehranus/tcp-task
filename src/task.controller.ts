@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { ITask } from './Interface/task.interface';
+import { ITask, updateDto } from './Interface/task.interface';
 
 
 @Controller("task")
@@ -21,6 +21,11 @@ export class TaskController {
   deleteTaskUser({title}:{title:string}){
   
     return this.taskService.deleteTask(title)
+  }
+  @MessagePattern("update_task")
+  updateTaskUser(updateDto:updateDto){
+    
+    return this.taskService.updateTask(updateDto)
   }
 
 }

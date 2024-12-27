@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Task, TaskDocument } from './schema/task.schema';
 import { Model } from 'mongoose';
-import { ITask } from './Interface/task.interface';
+import { ITask, updateDto } from './Interface/task.interface';
 import { error } from 'console';
 
 @Injectable()
@@ -51,6 +51,28 @@ export class TaskService {
     status:HttpStatus.OK,
     error:false,
     message:"remove task sucessfully"
+  }
+ }
+
+ async updateTask(updateDto:updateDto){
+  const {content,title,status,userId}=updateDto
+  const task=await this.taskModel.findOne({userId})
+  if(!task){
+    return{
+      status:HttpStatus.NOT_FOUND,
+      error:true,
+      message:"task user not found"
+    }
+  }
+  if(title) task.title=title
+  if(content) task.content=content
+  if(status) task.status=status
+  await task.save()
+  return{
+    status:HttpStatus.OK,
+    error:false,
+    message:"updated sucessfully",
+    data:task
   }
  }
 
