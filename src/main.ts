@@ -1,13 +1,17 @@
 import { NestFactory } from "@nestjs/core";
 import { TaskModule } from "./task.module";
-import { TcpOptions, Transport } from "@nestjs/microservices";
+import { RmqOptions, Transport } from "@nestjs/microservices";
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice(TaskModule, {
-    transport: Transport.TCP,
-    options: { port: 4003, host: "0.0.0.0" },
-  } as TcpOptions);
+    transport:Transport.RMQ,
+    options:{
+     urls:["amqp://localhost:5672"],
+     queue:"task-queue",
+     queueOptions:{}
+    }
+   } as RmqOptions);
   await app.listen();
-  console.log("task service is runnig in : localhost:4003");
+  console.log("task service is runnig ");
 }
 bootstrap();
