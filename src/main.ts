@@ -1,14 +1,19 @@
-import { NestFactory } from "@nestjs/core";
-import { TaskModule } from "./task.module";
-import { TcpOptions, Transport } from "@nestjs/microservices";
+import {NestFactory} from "@nestjs/core";
+import {MicroserviceOptions, Transport} from "@nestjs/microservices";
+import {TaskModule} from "./task.module";
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice(TaskModule, {
-    transport: Transport.TCP,
-    options: { port: 4003, host: "0.0.0.0" },
-  } as TcpOptions);
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    TaskModule,
+    {
+      transport: Transport.TCP,
+      options: {
+        host: "0.0.0.0",
+        port: 4003,
+      },
+    }
+  );
   await app.listen();
-  
-  console.log("task service is runnig in : localhost:4003");
+  console.log("task microservice started: ", +process.env.TASK_SERVICE_PORT);
 }
 bootstrap();
