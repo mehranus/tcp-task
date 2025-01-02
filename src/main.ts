@@ -8,6 +8,7 @@ async function bootstrap() {
     options: { port: 4003, host: "0.0.0.0" },
   } as TcpOptions);
   await app.listen();
+  
   console.log("task service is runnig in : localhost:4003");
 }
 bootstrap();

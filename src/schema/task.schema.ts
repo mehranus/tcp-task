@@ -9,8 +9,10 @@ import { TaskEnum } from "src/enum/task.enum";
 export class Task{
   @Prop()
   title:string
+  
   @Prop()
   content:string
+
   @Prop()
   userId:string
   @Prop({enum:TaskEnum,default:TaskEnum.Pending})
